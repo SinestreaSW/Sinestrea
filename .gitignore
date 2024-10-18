@@ -1,0 +1,8 @@
+# Build
+target/
+
+# Development
+.idea
+
+# Secrets
+Config.json
