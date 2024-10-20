@@ -1,4 +1,4 @@
-package org.sinestrea.sinestrea;
+package org.sinestrea.sinestrea.settings;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,17 +10,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.charset.StandardCharsets;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SettingsManager {
     private static SettingsManager instance;
     private Settings settings;
 
     private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private final Path CONFIG_FILE = new File(".").toPath().resolve("Config.json");
+    private final static Logger LOGGER = LoggerFactory.getLogger("SettingsManager");
 
     public SettingsManager()
     {
         if (!CONFIG_FILE.toFile().exists()) {
-            System.out.println("[SettingsManager] : Config.json not found");
+            LOGGER.error("Config.json not found");
             System.exit(1);
         }
 
@@ -28,9 +32,9 @@ public class SettingsManager {
             BufferedReader reader = Files.newBufferedReader(CONFIG_FILE, StandardCharsets.UTF_8);
             this.settings = GSON.fromJson(reader, Settings.class);
             reader.close();
-            System.out.println("[SettingsManager] : Settings loaded");
+            LOGGER.info("Settings loaded");
         } catch (IOException e) {
-            System.out.println("[SettingsManager] : Failed loading settings");
+            LOGGER.info("Failed loading settings");
             e.printStackTrace();
         }
     }

@@ -1,4 +1,4 @@
-package org.sinestrea.sinestrea;
+package org.sinestrea.sinestrea.settings;
 
 public class Settings {
     private String BotToken;
